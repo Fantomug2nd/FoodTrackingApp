@@ -6,25 +6,26 @@ import model.entity.enums.Role;
 
 public class User {
 
-    private int id;
+    private long id;
     private String name;
     private String surname;
+    //TODO: add gender to db
     private Gender gender;
-    private int age;
-    private int height;
-    private int weight;
+    private long age;
+    private long height;
+    private long weight;
     private String login;
     private String pass;
     private Role role;
     private Lifestyle lifestyle;
-    private int intake;
+    private long intake;
 
     public User() {
     }
 
-    public User(int id, String name, String surname, Gender gender, int age, int height,
-                int weight, String login, String pass, Role role,
-                Lifestyle lifestyle, int intake) {
+    public User(long id, String name, String surname, Gender gender, long age, long height,
+                long weight, String login, String pass, Role role,
+                Lifestyle lifestyle, long longake) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -39,11 +40,11 @@ public class User {
         this.intake = intake;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -71,27 +72,27 @@ public class User {
         this.gender = gender;
     }
 
-    public int getAge() {
+    public long getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(long age) {
         this.age = age;
     }
 
-    public int getHeight() {
+    public long getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(long height) {
         this.height = height;
     }
 
-    public int getWeight() {
+    public long getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(long weight) {
         this.weight = weight;
     }
 
@@ -127,12 +128,16 @@ public class User {
         this.lifestyle = lifestyle;
     }
 
-    public int getIntake() {
+    public long getIntake() {
         return intake;
     }
 
-    public void setIntake(int intake) {
-        this.intake = intake;
+    public void setIntake() {
+        calculateIntake();
     }
 
+    //TODO: recalculate lifestyle
+    private void calculateIntake(){
+        intake = (long)(((weight * 10 + height * 6 - 5 * age + 5)* (10 + lifestyle.ordinal())) / 10.);
+    }
 }

@@ -24,10 +24,10 @@ public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         allowedUri.put(Role.ADMIN, Arrays.asList(
-                "logout","statistics","calculator")
+                "logout","statistics","calculator","addFood","add","addFood/submit","removeRecord","updateRecord")
         );
         allowedUri.put(Role.USER, Arrays.asList(
-                "logout","statistics","calculator", "add")
+                "logout","statistics","calculator", "add","addFood","addFood/submit","removeRecord","updateRecord")
         );
         // null represents not authenticated user(just a visitor)
         allowedUri.put(null, Arrays.asList(

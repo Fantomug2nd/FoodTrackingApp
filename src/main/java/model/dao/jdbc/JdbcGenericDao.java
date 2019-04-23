@@ -51,7 +51,7 @@ public abstract class JdbcGenericDao<T> implements GenericDao<T> {
     protected abstract void setInsertQueryParams(PreparedStatement s, T entity) throws SQLException;
 
     @Override
-    public Optional<T> findById(int id) {
+    public Optional<T> findById(long id) {
         try (PreparedStatement s = connection.prepareStatement(getFindByIdQuery())) {
             setFindByIdQueryParams(s, id);
             ResultSet resultSet = s.executeQuery();
@@ -65,7 +65,7 @@ public abstract class JdbcGenericDao<T> implements GenericDao<T> {
         }
     }
 
-    protected abstract void setFindByIdQueryParams(PreparedStatement s, int id) throws SQLException;
+    protected abstract void setFindByIdQueryParams(PreparedStatement s, long id) throws SQLException;
 
     protected abstract String getFindByIdQuery();
 
@@ -86,7 +86,8 @@ public abstract class JdbcGenericDao<T> implements GenericDao<T> {
 //        }
     }
 
-    protected final List<T> findList(String query, Consumer<PreparedStatement> prepareFunc) {
+
+    protected List<T> findList(String query, Consumer<PreparedStatement> prepareFunc) {
         try (PreparedStatement s = connection.prepareStatement(query)) {
             prepareFunc.accept(s);
             ResultSet resultSet = s.executeQuery();
@@ -100,10 +101,10 @@ public abstract class JdbcGenericDao<T> implements GenericDao<T> {
         }
     }
 
-    protected int getInsertionId(Statement s) throws SQLException {
+    protected long getInsertionId(Statement s) throws SQLException {
         try (ResultSet generatedKeys = s.getGeneratedKeys()) {
             if (generatedKeys.next()) {
-                return generatedKeys.getInt(1);
+                return generatedKeys.getLong(1);
             } else {
                 throw new SQLException("Insertion failed, no ID obtained.");
             }
@@ -115,7 +116,7 @@ public abstract class JdbcGenericDao<T> implements GenericDao<T> {
     protected abstract String getFindAllQuery();
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         throw new UnsupportedOperationException("This feature is not supported yet");
     }
 }

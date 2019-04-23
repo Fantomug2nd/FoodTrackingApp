@@ -63,4 +63,12 @@
         <!--        FIXME magic constant - app. Maybe pattern should be '/*'-->
         <url-pattern>/app/*</url-pattern>
     </filter-mapping>
+    <filter>
+        <filter-name>langFilter</filter-name>
+        <filter-class>controller.filter.LangFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>langFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

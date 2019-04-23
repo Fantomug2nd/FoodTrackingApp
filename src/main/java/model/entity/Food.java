@@ -1,20 +1,20 @@
 package model.entity;
 
 public class Food {
-    private int id;
+    private long id;
     private String name;
-    private int carbs;
-    private int fat;
-    private int protein;
-    private int calories;
-    private int userId;
-    private int weight;
+    private long carbs;
+    private long fat;
+    private long protein;
+    private long calories;
+    private long userId;
+    private long weight;
 
     public Food() {
     }
 
-    public Food(int id, String name, int carbs, int fat,
-                int protein, int calories, int userId, int weight) {
+    public Food(long id, String name, long carbs, long fat,
+                long protein, long calories, long userId, long weight) {
         this.id = id;
         this.name = name;
         this.carbs = carbs;
@@ -25,11 +25,11 @@ public class Food {
         this.weight = weight;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -41,51 +41,51 @@ public class Food {
         this.name = name;
     }
 
-    public int getCarbs() {
+    public long getCarbs() {
         return carbs;
     }
 
-    public void setCarbs(int carbs) {
+    public void setCarbs(long carbs) {
         this.carbs = carbs;
     }
 
-    public int getFat() {
+    public long getFat() {
         return fat;
     }
 
-    public void setFat(int fat) {
+    public void setFat(long fat) {
         this.fat = fat;
     }
 
-    public int getProtein() {
+    public long getProtein() {
         return protein;
     }
 
-    public void setProtein(int protein) {
+    public void setProtein(long protein) {
         this.protein = protein;
     }
 
-    public int getCalories() {
+    public long getCalories() {
         return calories;
     }
 
-    public void setCalories(int calories) {
+    public void setCalories(long calories) {
         this.calories = calories;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
-    public int getWeight() {
+    public long getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(long weight) {
         this.weight = weight;
     }
 }

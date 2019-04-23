@@ -43,7 +43,7 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
     @Override
     protected void setUpdateQueryParams(PreparedStatement s, User user) throws SQLException {
         int nextParamIndex = setUserParams(s, user);
-        s.setInt(nextParamIndex, user.getId());
+        s.setLong(nextParamIndex, user.getId());
     }
 
     @Override
@@ -64,14 +64,14 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
     private int setUserParams(PreparedStatement s, User user) throws SQLException {
         s.setString(1, user.getName());
         s.setString(2, user.getSurname());
-        s.setInt(3, user.getAge());
-        s.setInt(4, user.getHeight());
-        s.setInt(5, user.getWeight());
+        s.setLong(3, user.getAge());
+        s.setLong(4, user.getHeight());
+        s.setLong(5, user.getWeight());
         s.setString(6, user.getLogin());
         s.setString(7, user.getPass());
-        s.setInt(8, user.getRole().ordinal()+1);
-        s.setInt(9, user.getLifestyle().ordinal()+1);
-        s.setInt(10, user.getIntake());
+        s.setLong(8, user.getRole().ordinal()+1);
+        s.setLong(9, user.getLifestyle().ordinal()+1);
+        s.setLong(10, user.getIntake());
         return 10 + 1;
     }
 
@@ -92,17 +92,17 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
 
     private User getFromRow(ResultSet resultSet) throws SQLException {
         User user = new User();
-        user.setId(resultSet.getInt("user_id"));
+        user.setId(resultSet.getLong("user_id"));
         user.setName(resultSet.getString("name"));
         user.setSurname(resultSet.getString("surname"));
-        user.setAge(resultSet.getInt("age"));
-        user.setHeight(resultSet.getInt("height"));
-        user.setWeight(resultSet.getInt("weight"));
+        user.setAge(resultSet.getLong("age"));
+        user.setHeight(resultSet.getLong("height"));
+        user.setWeight(resultSet.getLong("weight"));
         user.setLogin(resultSet.getString("login"));
         user.setPass(resultSet.getString("password"));
         user.setRole(Role.values[(resultSet.getInt("status_id"))-1]);
         user.setLifestyle(Lifestyle.values[(resultSet.getInt("lifestyle_id"))-1]);
-        user.setIntake(resultSet.getInt("intake"));
+        user.setIntake();
         return user;
     }
 
@@ -112,8 +112,8 @@ public class JdbcUserDao extends JdbcGenericDao<User> implements UserDao {
     }
 
     @Override
-    protected void setFindByIdQueryParams(PreparedStatement s, int id) throws SQLException {
-        s.setInt(1, id);
+    protected void setFindByIdQueryParams(PreparedStatement s, long id) throws SQLException {
+        s.setLong(1, id);
     }
 
     @Override

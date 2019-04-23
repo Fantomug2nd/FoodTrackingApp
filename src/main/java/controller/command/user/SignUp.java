@@ -24,13 +24,13 @@ public class SignUp implements Command {
         User user = new User();
         user.setName(request.getParameter("name"));
         user.setSurname(request.getParameter("surname"));
-        user.setAge(Integer.parseInt(request.getParameter("age")));
-        user.setHeight(Integer.parseInt(request.getParameter("height")));
-        user.setWeight(Integer.parseInt(request.getParameter("weight")));
+        user.setAge(Long.parseLong(request.getParameter("age")));
+        user.setHeight(Long.parseLong(request.getParameter("height")));
+        user.setWeight(Long.parseLong(request.getParameter("weight")));
         user.setLogin(request.getParameter("login"));
         user.setPass(request.getParameter("password"));
         user.setLifestyle(Lifestyle.valueOf(request.getParameter("lifestyle")));
-        user.setIntake(2000);
+        user.setIntake();
         // setting user status
         user.setRole(Role.USER);
         // save user to database

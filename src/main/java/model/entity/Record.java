@@ -4,16 +4,16 @@ import java.time.LocalDate;
 
 
 public class Record {
-    private int id;
+    private long id;
     private User user;
     private Food food;
-    private int portions;
+    private long portions;
     private LocalDate date;
 
     public Record() {
     }
 
-    public Record(int id, User user, Food food,int portions, LocalDate date) {
+    public Record(long id, User user, Food food,long portions, LocalDate date) {
         this.id = id;
         this.user = user;
         this.food = food;
@@ -21,11 +21,11 @@ public class Record {
         this.date = date;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -45,11 +45,11 @@ public class Record {
         this.food = food;
     }
 
-    public int getPortions() {
+    public long getPortions() {
         return portions;
     }
 
-    public void setPortions(int portions) {
+    public void setPortions(long portions) {
         this.portions = portions;
     }
 

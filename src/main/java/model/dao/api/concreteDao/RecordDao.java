@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface RecordDao extends GenericDao<Record> {
     public List<Record> getByUserAndDate(User user, LocalDate date) ;
+    public void updateById(long id, long portions);
 }

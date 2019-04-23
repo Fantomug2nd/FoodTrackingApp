@@ -36,5 +36,9 @@ public class UserService {
     private boolean verifyPassword(User user, String password) {
         return Objects.equals(user.getPass(), password);
     }
+
+    public boolean intakeIsOk(long currentIntake, long goalIntake) {
+        return currentIntake <= goalIntake;
+    }
 }
 

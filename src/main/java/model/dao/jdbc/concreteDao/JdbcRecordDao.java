@@ -19,7 +19,9 @@ public class JdbcRecordDao extends JdbcGenericDao<Record> implements RecordDao {
     private static final String FIND_BY_ID_QUERY = "SELECT record_id, user_id, food_id, date,portions FROM records WHERE record_id=?";
     private static final String FIND_ALL_QUERY = "SELECT record_id, user_id, food_id, date,portions FROM records";
     private static final String UPDATE_QUERY = "UPDATE records SET user_id=?, food_id=?, date=?,portions=? WHERE record_id=?";
+    private static final String UPDATE_BY_ID_QUERY = "UPDATE records SET portions=? WHERE record_id=?";
     private static final String FIND_BY_DATE_AND_USER_QUERY = "SELECT record_id, user_id, food_id, date, portions FROM records WHERE user_id=? AND date=?";
+    private static final String DELETE_QUERY ="DELETE FROM records WHERE record_id=?";
     private static final int NUMBER_OF_FIELDS = 5;
     private UserDao userDao;
     private FoodDao foodDao;
@@ -34,7 +36,7 @@ public class JdbcRecordDao extends JdbcGenericDao<Record> implements RecordDao {
     @Override
     protected void setUpdateQueryParams(PreparedStatement s, Record record) throws SQLException {
         setRecordParams(s, record);
-        s.setInt(NUMBER_OF_FIELDS, record.getId());
+        s.setLong(NUMBER_OF_FIELDS, record.getId());
     }
 
     @Override
@@ -53,13 +55,13 @@ public class JdbcRecordDao extends JdbcGenericDao<Record> implements RecordDao {
 
     private void setRecordParams(PreparedStatement s, Record record) throws SQLException {
         // user_id
-        s.setInt(1, record.getUser().getId());
+        s.setLong(1, record.getUser().getId());
         // food_id
-        s.setInt(2, record.getFood().getId());
+        s.setLong(2, record.getFood().getId());
        // date
         setLocalDate(s, 3, record.getDate());
 
-        s.setInt(4, record.getPortions());
+        s.setLong(4, record.getPortions());
 
     }
 
@@ -70,8 +72,8 @@ public class JdbcRecordDao extends JdbcGenericDao<Record> implements RecordDao {
     }
 
     @Override
-    protected void setFindByIdQueryParams(PreparedStatement s, int id) throws SQLException {
-        s.setInt(1, id);
+    protected void setFindByIdQueryParams(PreparedStatement s, long id) throws SQLException {
+        s.setLong(1, id);
     }
 
     @Override
@@ -82,24 +84,24 @@ public class JdbcRecordDao extends JdbcGenericDao<Record> implements RecordDao {
     @Override
     protected Record getFromResultSet(ResultSet resultSet) throws SQLException {
         Record record = new Record();
-        record.setId(resultSet.getInt("record_id"));
+        record.setId(resultSet.getLong("record_id"));
         // reading food
         record.setFood(loadFood(resultSet));
         // reading user
         record.setUser(loadUser(resultSet));
         // reading remain primitive fields
         record.setDate(resultSet.getObject("date", LocalDate.class));
-        record.setPortions(resultSet.getInt("portions"));
+        record.setPortions(resultSet.getLong("portions"));
         return record;
     }
 
     private Food loadFood(ResultSet resultSet) throws SQLException {
-        int foodId = resultSet.getInt("food_id");
+        long foodId = resultSet.getLong("food_id");
         return foodDao.findById(foodId).get();
     }
 
     private User loadUser(ResultSet resultSet) throws SQLException {
-        int userId = resultSet.getInt("user_id");
+        long userId = resultSet.getLong("user_id");
         return userDao.findById(userId).get();
     }
 
@@ -112,7 +114,7 @@ public class JdbcRecordDao extends JdbcGenericDao<Record> implements RecordDao {
     public List<Record> getByUser(User user) {
         return findList(FIND_BY_USER_QUERY, (s) -> {
             try {
-                s.setInt(1, user.getId());
+                s.setLong(1, user.getId());
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
@@ -122,11 +124,34 @@ public class JdbcRecordDao extends JdbcGenericDao<Record> implements RecordDao {
     public List<Record> getByUserAndDate(User user,LocalDate date) {
         return findList(FIND_BY_DATE_AND_USER_QUERY, (s) -> {
             try {
-                s.setInt(1, user.getId());
+                s.setLong(1, user.getId());
                 setLocalDate(s, 2 , date);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
         });
     }
+
+    @Override
+    public void delete(long id) {
+        try (PreparedStatement statement = getConnection().prepareStatement(DELETE_QUERY)) {
+            statement.setLong(1, id);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateById(long id, long portions){
+        try (PreparedStatement statement = getConnection().prepareStatement(UPDATE_BY_ID_QUERY)) {
+            statement.setLong(1, portions);
+            statement.setLong(2, id);
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
+

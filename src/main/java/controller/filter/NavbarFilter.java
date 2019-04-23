@@ -35,7 +35,7 @@ public class NavbarFilter implements Filter {
             User user = (User) session.getAttribute("user");
             switch (user.getRole()) {
                 case ADMIN:
-                    return "/WEB-INF/admin/navbar.jsp";
+
                 case USER:
                     return "/WEB-INF/user/navbar.jsp";
             }

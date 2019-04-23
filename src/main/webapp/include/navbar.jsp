@@ -1,16 +1,21 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
+<fmt:setBundle basename="message" />
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <a class="navbar-brand my-0 mr-md-auto font-weight-normal" href="${pageContext.request.contextPath}/">
         <img src="${pageContext.request.contextPath}/img/logo.gif" width="60" height="60" alt="">
     </a>
-    <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" href="${pageContext.request.contextPath}/app/calculator">Calculator</a>
-        <a class="p-2 text-dark" href="${pageContext.request.contextPath}/app/statistics">Statistics</a>
 
-    </nav>
+    <a class="navbar-brand font-weight-normal" href="?locale=en">
+        <img src="${pageContext.request.contextPath}/img/eng.png" width="40" height="30" alt="">
+    </a>
+
+    <a class="navbar-brand font-weight-normal" href="?locale=uk">
+        <img src="${pageContext.request.contextPath}/img/ukr.png" width="40" height="30" alt="">
+    </a>
     <c:choose>
         <c:when test="${not empty navbarPath}">
             <jsp:include page="${navbarPath}"/>
